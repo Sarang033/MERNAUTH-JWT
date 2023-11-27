@@ -5,6 +5,38 @@ import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const [passShow, setPassShow] = useState(false);
+  const [inpval,setInpval] = useState({
+    email:"",
+    password:"",
+  })
+
+  const setVal = (e) =>{
+    const {name,value} = e.target;
+    setInpval(()=>{
+      return{
+        ...inpval,
+        [name]:value
+      }
+    })
+  }
+
+  const loginUser = (e) =>{
+    e.preventDefault();
+
+    const {email,password} = inpval;
+  
+    if(email === ""){
+      alert("Please enter your email");
+    }else if(!email.includes("@")){
+      alert("Please enter valid email");
+    }else if(password ===""){
+      alert("Please enter your password");
+    }else if(password.length < 6){
+      alert("Password must be 6 characters long")
+    }else{
+      console.log("User loged in successfully")
+    }
+  }
 
   return (
     <>
@@ -20,6 +52,8 @@ const Login = () => {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                value={inpval.email}
+                onChange={setVal}
                 name="email"
                 id="email"
                 placeholder="Enter your email address"
@@ -30,6 +64,8 @@ const Login = () => {
               <div className="two">
                 <input
                   type={!passShow ? "password" : "text"}
+                  value={inpval.password}
+                  onChange={setVal}
                   name="password"
                   id="password"
                   placeholder="Enter your password"
@@ -43,7 +79,7 @@ const Login = () => {
               </div>
               
             </div>
-            <button className="btn">Login</button>
+            <button className="btn" onClick={loginUser}>Login</button>
             <p>Dont't have an Account? <NavLink to={"/register"}>Sign up</NavLink></p>
           </form>
         </div>

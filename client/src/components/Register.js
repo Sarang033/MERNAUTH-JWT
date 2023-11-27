@@ -6,6 +6,49 @@ import { NavLink } from 'react-router-dom';
 const Register = () => {
     const [passShow, setPassShow] = useState(false);
     const [cpassShow, setCpassShow] = useState(false);
+    const [inpval,setInpval] = useState({
+      fname:"",
+      email:"",
+      password:"",
+      cpassword:""
+    })
+
+    const setVal = (e) =>{
+      const {name,value} = e.target;
+      setInpval(()=>{
+        return{
+          ...inpval,
+          [name]:value
+        }
+      })
+    }
+
+    const addUserdata = (e) =>{
+      e.preventDefault()
+
+      const {fname,email,password,cpassword} = inpval;
+
+      if(fname === ""){
+        alert("Please enter your name");
+      }else if(email === ""){
+        alert("Please enter your email");
+      }else if(!email.includes("@")){
+        alert("Please enter valid email");
+      }else if(password ===""){
+        alert("Please enter your password");
+      }else if(password.length < 6){
+        alert("Password must be 6 characters long")
+      }else if(cpassword ===""){
+        alert("Please enter confirm password");
+      }else if(cpassword.length < 6){
+        alert("Password must be 6 characters long")
+      }else if(password !== cpassword){
+        alert("Password and confirm password do not match")
+      }else{
+        console.log("User registration done")
+      }
+
+    }
 
   return (
     <>
@@ -20,6 +63,8 @@ const Register = () => {
               <label htmlFor="fname">Name</label>
               <input
                 type="text"
+                onChange={setVal}
+                value={inpval.fname}
                 name="fname"
                 id="fname"
                 placeholder="Enter your Name"
@@ -29,6 +74,8 @@ const Register = () => {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                onChange={setVal}
+                value={inpval.email}
                 name="email"
                 id="email"
                 placeholder="Enter your email address"
@@ -39,6 +86,8 @@ const Register = () => {
               <div className="two">
                 <input
                   type={!passShow ? "password" : "text"}
+                  onChange={setVal}
+                  value={inpval.password}
                   name="password"
                   id="password"
                   placeholder="Enter your password"
@@ -56,6 +105,8 @@ const Register = () => {
               <div className="two">
                 <input
                   type={!cpassShow ? "password" : "text"}
+                  onChange={setVal}
+                  value={inpval.cpassword}
                   name="cpassword"
                   id="cpassword"
                   placeholder="Confirm password"
@@ -68,7 +119,7 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <button className="btn">Sign Up</button>
+            <button className="btn" onClick={addUserdata}>Sign Up</button>
             <p>Already have an Account? <NavLink to={"/"}>Log In</NavLink></p>
           </form>
         </div>
