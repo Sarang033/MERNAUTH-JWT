@@ -9,7 +9,7 @@ const Header = () => {
         <nav>
           <h1>Auth Master</h1>
           <div className="avtar">
-            <Avatar style={{background:"blue"}}>S</Avatar>
+            <Avatar style={{ background: "blue" }}>S</Avatar>
           </div>
         </nav>
       </header>
