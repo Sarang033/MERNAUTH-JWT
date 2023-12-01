@@ -5,6 +5,7 @@ const userdb = require("../models/userSchema");
 //for user registration
 router.post("/register", async (req, res) => {
   const { fname, email, password, cpassword } = req.body;
+
   if (!fname || !email || !password || !cpassword) {
     res.status(422).json({ error: "fill all the details" });
   }
@@ -24,9 +25,16 @@ router.post("/register", async (req, res) => {
         cpassword,
       });
 
+      //password hashing
+      const storeData = await finalUser.save();
+      res.status(201).json(storeData);
+
       
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(422).json(error);
+    console.log("catch block error")
+  }
 });
 
 module.exports = router;
